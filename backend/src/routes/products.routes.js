@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
     const category = typeof req.query.category === "string" ? req.query.category.trim().slice(0, 80) : "";
     const sort = allowedSorts[req.query.sort] ? req.query.sort : "newest";
 
-    const conditions = ["p.status = 'active'", "p.stock_quantity > 0"];
+    const conditions = ["p.status = 'active'", "p.stock_quantity > 0", "c.is_active = TRUE", "s.status = 'approved'"];
     const values = [];
 
     if (search) {
