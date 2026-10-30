@@ -50,6 +50,7 @@ router.get("/", async (req, res, next) => {
       `SELECT COUNT(*) AS total
        FROM products p
        INNER JOIN categories c ON c.id = p.category_id
+       INNER JOIN seller_profiles s ON s.id = p.seller_id
        WHERE ${where}`,
       values
     );
