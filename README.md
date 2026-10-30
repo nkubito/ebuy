@@ -17,6 +17,7 @@ No build step is required for the current static storefront.
 ## Current storefront features
 
 - Responsive marketplace landing page and category browsing
+- Dedicated product details page and FAQ page
 - Product search, category filters and sorting
 - Sample product cards with RWF pricing and seller labels
 - Cart with quantity controls and browser localStorage persistence
