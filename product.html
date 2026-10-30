@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10251d"><title>Product details | eBuy Rwanda</title><link rel="stylesheet" href="styles.css"><style>
+.detail{width:min(1100px,calc(100% - 40px));margin:54px auto 90px}.crumb{font-size:12px;color:#718078;margin-bottom:26px}.detail-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:55px;align-items:start}.detail-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;background:#f6f5ef}.detail-copy{padding-top:12px}.detail-copy .eyebrow{margin-bottom:18px}.detail-copy h1{font:700 clamp(30px,4vw,46px)/1.12 Manrope,sans-serif;letter-spacing:-1.8px;margin:0 0 16px}.detail-price{font-size:27px;color:#173b2d;font-weight:800;margin:22px 0}.detail-seller,.detail-description{color:#718078;line-height:1.7;font-size:14px}.detail-description{margin:25px 0}.detail-actions{display:flex;gap:12px;align-items:center;margin-top:28px}.detail-actions button{border:0;border-radius:5px;padding:15px 23px;font-weight:700;cursor:pointer}.detail-add{background:#173b2d;color:white}.detail-back{background:#f0f2ed;color:#173b2d}.detail-note{font-size:12px;color:#8a7562;margin-top:22px;line-height:1.6}.detail-header{border-bottom:1px solid #eceee9}
+@media(max-width:700px){.detail-grid{grid-template-columns:1fr;gap:25px}.detail{margin-top:28px}.detail-copy{padding-top:0}}
+</style></head><body><header class="site-header detail-header"><a class="brand" href="index.html"><span class="brand-mark">e</span><span>buy<span class="brand-dot">.</span></span></a><nav style="margin-left:auto;display:flex;gap:20px;font-size:13px"><a href="index.html">Shop</a><a href="faq.html">FAQs</a></nav></header>
+<main class="detail"><div class="crumb"><a href="index.html">Home</a> / <span id="crumbName">Product</span></div><div id="detailContent" class="detail-grid" aria-live="polite"></div></main>
+<script>
+const catalog=[
+{id:"p1",name:"Everyday Classic Sneakers",category:"Fashion",seller:"Kigali Streetwear",price:38500,image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85"},
+{id:"p2",name:"Wireless Studio Headphones",category:"Electronics",seller:"Tech Corner Kigali",price:68500,image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85"},
+{id:"p3",name:"Minimal Ceramic Vase Set",category:"Home",seller:"Imizi Home",price:24500,image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=1000&q=85"},
+{id:"p4",name:"Daily Glow Skincare Kit",category:"Beauty",seller:"Glow House",price:42000,image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=1000&q=85"},
+{id:"p5",name:"Timeless Everyday Watch",category:"Accessories",seller:"The Edit Rwanda",price:55000,image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85"},
+{id:"p6",name:"Structured Weekend Tote",category:"Fashion",seller:"Inzuki Designs",price:32000,image:"https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1000&q=85"},
+{id:"p7",name:"Modern Table Lamp",category:"Home",seller:"Imizi Home",price:47500,image:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85"},
+{id:"p8",name:"Compact Bluetooth Speaker",category:"Electronics",seller:"Tech Corner Kigali",price:59000,image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=1000&q=85"}];
+const id=new URLSearchParams(location.search).get("id");
+const p=catalog.find(item=>item.id===id);
+const money=value=>new Intl.NumberFormat("en-RW",{style:"currency",currency:"RWF",maximumFractionDigits:0}).format(value);
+const root=document.getElementById("detailContent");
+if(!p){root.innerHTML='<div><h1>Product not found</h1><p class="detail-description">This product may no longer be available in the demo catalog.</p><a class="detail-back" href="index.html">Return to shop</a></div>';}
+else{
+document.title=p.name+" | eBuy Rwanda";document.getElementById("crumbName").textContent=p.name;
+root.innerHTML='<img class="detail-photo" src="'+p.image+'" alt="'+p.name+'"><section class="detail-copy"><span class="eyebrow">DISCOVER ON EBUY</span><h1>'+p.name+'</h1><p class="detail-seller">'+p.category+' · Sold by '+p.seller+'</p><p class="detail-price">'+money(p.price)+'</p><p class="detail-description">A featured sample listing from the eBuy Rwanda demonstration catalog. Product information, availability and seller details will be verified when live seller listings are connected.</p><div class="detail-actions"><button class="detail-add" id="addDetail">Add to cart</button><button class="detail-back" onclick="location.href=\'index.html\'">Continue shopping</button></div><p class="detail-note">Demo listing only. Adding this item saves it to your browser cart; it does not place an order or collect payment.</p></section>';
+document.getElementById("addDetail").addEventListener("click",()=>{let cart=JSON.parse(localStorage.getItem("ebuy-cart")||"[]");const found=cart.find(item=>item.id===p.id);if(found)found.quantity+=1;else cart.push({id:p.id,quantity:1});localStorage.setItem("ebuy-cart",JSON.stringify(cart));const button=document.getElementById("addDetail");button.textContent="Added to cart ✓";});
+}
+</script></body></html>
