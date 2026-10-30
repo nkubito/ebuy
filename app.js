@@ -38,7 +38,7 @@ function renderProducts(){
       </div>
       <div class="product-info">
         <span class="product-category">${p.category}</span>
-        <h3 class="product-name" title="${p.name}">${p.name}</h3>
+        <h3 class="product-name" title="${p.name}"><a href="product.html?id=${p.id}">${p.name}</a></h3>
         <p class="seller-name">Sold by ${p.seller}</p>
         <div class="product-bottom"><strong class="product-price">${money(p.price)}</strong><button class="add-button" data-add="${p.id}" aria-label="Add ${p.name} to cart">+</button></div>
       </div>
