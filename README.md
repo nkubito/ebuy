@@ -44,3 +44,15 @@ No build step is required for the current static storefront.
 ## Development
 
 Work on feature branches and review changes before merging into `main`. Add automated tests and CI checks as the backend and production workflows are introduced.
+
+
+## Backend API
+
+The first backend foundation is in `backend/`.
+
+- Read [backend setup instructions](backend/README.md).
+- Configure `backend/.env` from `backend/.env.example`.
+- Create the MySQL schema using `backend/database/schema.sql`.
+- Start the API from the backend directory with `npm install` and `npm run dev`.
+
+The API currently provides health checks and a read-only product listing. The storefront still uses sample product data until the API and production catalog are connected. Do not treat the demo cart as a submitted order or payment.
