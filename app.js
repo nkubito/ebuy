@@ -76,6 +76,7 @@ grid.addEventListener("click",e=>{
   const add=e.target.closest("[data-add]");
   const wish=e.target.closest("[data-wishlist]");
   if(add)addToCart(add.dataset.add);
+  else if(!wish){const card=e.target.closest(".product-card");if(card){const id=card.querySelector("[data-add]")?.dataset.add;if(id)window.location.href=`product.html?id=${encodeURIComponent(id)}`;}}
   if(wish){const id=wish.dataset.wishlist;wishlist.has(id)?wishlist.delete(id):wishlist.add(id);renderProducts();}
 });
 document.getElementById("filterRow").addEventListener("click",e=>{
