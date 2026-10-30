@@ -1,386 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>e-buy Rwanda</title>
-
-<style>
-body { margin:0; font-family: Arial; background:#f5f5f5; }
-
-/* COLORS */
-:root {
-    --main: #ff6a00;
-}
-
-/* TOP BAR */
-.topbar {
-    background:#f1f1f1;
-    padding:5px 20px;
-    display:flex;
-    justify-content: space-between;
-}
-
-/* HEADER */
-.header {
-    display:flex;
-    align-items:center;
-    padding:15px;
-    background:white;
-}
-
-.logo {
-    font-size:30px;
-    color:var(--main);
-    font-weight:bold;
-}
-
-.search {
-    flex:1;
-    margin:0 20px;
-    display:flex;
-}
-
-.search input {
-    width:100%;
-    padding:10px;
-    border:2px solid var(--main);
-    border-radius:25px 0 0 25px;
-}
-
-.search button {
-    background:var(--main);
-    border:none;
-    padding:10px 20px;
-    color:white;
-    border-radius:0 25px 25px 0;
-    cursor:pointer;
-}
-
-/* MENU */
-.menu {
-    background:white;
-    padding:10px 20px;
-    display:flex;
-    gap:20px;
-    cursor:pointer;
-}
-
-/* CATEGORY DROPDOWN */
-.dropdown {
-position:relative;
-cursor:pointer;
-}
-
-.dropdown-content{
-display:none;
-position:absolute;
-background:white;
-padding:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-top:20px;
-}
-
-.dropdown:hover .dropdown-content{
-display:block;
-}
-
-/* MAIN */
-.main {
-    display:flex;
-    padding:20px;
-}
-
-.categories {
-    width:20%;
-    background:var(--main);
-    color:white;
-    padding:10px;
-}
-
-.banner {
-    width:55%;
-    margin:0 10px;
-    background:linear-gradient(to right, #ff4d6d, #ff9a3c);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-    height:200px;
-}
-
-.side {
-    width:25%;
-    background:white;
-    padding:15px;
-}
-
-.side button {
-    margin:5px 0;
-}
-
-/* PRODUCTS */
-.products {
-    display:flex;
-    flex-wrap:wrap;
-    padding:20px;
-}
-
-.card {
-    width:180px;
-    background:white;
-    margin:10px;
-    padding:10px;
-    border-radius:10px;
-}
-
-.card img {
-    width:100%;
-    height:150px;
-    object-fit:cover;
-}
-
-button {
-    width:100%;
-    padding:8px;
-    background:var(--main);
-    border:none;
-    color:white;
-    cursor:pointer;
-}
-
-/* PAGES */
-.page { display:none; }
-.active { display:block; }
- 
-
-/* FOOTER */
-.footer {
-    background:#FD1D1D;
-    padding:30px;
-}
-
-.footer-grid {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:30px;
-}
-
-
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .main { flex-direction: column; }
-
-  .categories, .banner, .side {
-    width: 100%;
-    margin: 10px 0;
-  }
-
-  .products { justify-content:center; }
-
-  .card { width:90%; }
-
-  .header {
-    flex-direction: column;
-    gap:10px;
-  }
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10251d">
+  <meta name="description" content="Discover great finds from independent sellers across Rwanda on eBuy. Shop fashion, electronics, home and more.">
+  <title>eBuy Rwanda — Discover. Shop. Sell.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
-
 <body>
-
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>🏠 <span onclick="showPage('home')">Home</span> |
-
-<div class="dropdown">
-<b>Categories ▼</b>
-<div class="dropdown-content">
-<p onclick="filterCat('Fashion')">Fashion</p>
-<p onclick="filterCat('Food')">Food</p>
-<p onclick="filterCat('Shoes')">Shoes</p>
-<p onclick="filterCat('Electronics')">Electronics</p>
-</div>
-</div>
-
-    <span onclick="showPage('login')">Login</span> /
-    <span onclick="showPage('register')">Register</span></div>
-    <div>🇷🇼 Rwanda</div>
-</div>
-
-<!-- HEADER -->
-<div class="header">
-    <div class="logo">🛒 e-buy</div>
-
-    <div class="search">
-        <input id="searchInput" placeholder="Search product...">
-        <button onclick="searchProduct()">Search</button>
+  <div class="announcement"><span>🇷🇼 Made for Rwanda</span><span>Shop local. Support local businesses.</span><a href="#sell">Become a seller <span aria-hidden="true">↗</span></a></div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="eBuy home"><span class="brand-mark">e</span><span>buy<span class="brand-dot">.</span></span></a>
+    <form class="search-bar" id="searchForm" role="search">
+      <label class="sr-only" for="searchInput">Search products</label>
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="searchInput" type="search" placeholder="Search for anything..." autocomplete="off">
+      <button type="submit">Search</button>
+    </form>
+    <div class="header-actions">
+      <button class="icon-action account-action" type="button" id="accountButton" aria-label="Account"><span>♙</span><small>Account</small></button>
+      <button class="icon-action cart-trigger" type="button" id="cartButton" aria-label="Open shopping cart"><span>♧</span><small>Cart</small><b id="cartCount" class="cart-count">0</b></button>
+      <button class="mobile-menu-button" id="mobileMenuButton" aria-label="Open navigation" aria-expanded="false">☰</button>
     </div>
-
-    <div onclick="showPage('cart')" style="cursor:pointer;">
-        🛒 Cart (<span id="cartCount">0</span>)
-    </div>
-</div>
-
-<!-- MENU -->
-<div class="menu">
-    <b onclick="showPage('home')">Shop</b>
-    <span onclick="showPage('about')">About</span>
-    <span onclick="showPage('contact')">Contact</span>
-<span onclick="showPayment()">Checkout</span>
-</div>
-
-<!-- HOME -->
-<div id="home" class="page active">
-
-<div class="main">
-
-<div class="categories">
-    <p>Men's Shoes</p>
-    <p>Women's Shoes</p>
-    <p>Dresses</p>
-    <p>Bags</p>
-</div>
-
-<div class="banner">🔥 New Arrivals on e-buy 🔥</div>
-
-<div class="side">
-    <h3>Welcome</h3>
-    <button onclick="showPage('login')">Login</button>
-    <button onclick="showPage('register')">Register</button>
-</div>
-
-</div>
-
-<div class="products" id="productList"></div>
-
-</div>
-
-<!-- ABOUT -->
-<div id="about" class="page">
-    <h2>About Us</h2>
-    <p>Welcome to e-buy Rwanda. We provide quality and affordable products. 
-
-About Us
-
-Welcome to our online store, your trusted destination for quality products at affordable prices. We are dedicated to making online shopping simple, convenient, and reliable for everyone.
-
-Our goal is to bring you a wide range of carefully selected products that meet your everyday needs, all in one place. We focus on quality, value, and customer satisfaction, ensuring that every purchase you make with us is a great experience.
-
-We believe shopping should be easy and stress-free. That’s why we provide secure payment options, fast delivery, and responsive customer support to help you every step of the way.
-
-Whether you’re shopping for essentials, gifts, or something special, we are here to serve you with honesty, care, and commitment.
-
-Thank you for choosing us we’re happy to be part of your shopping journey</p>
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="page">
-    <h2>Contact</h2>
-    <p>Phone: 0790161576</p>
-    <p>Email: example@email.com</p>
-</div>
-
-<!-- LOGIN -->
-<div id="login" class="page">
-    <h2>Login</h2>
-    <input placeholder="Email"><br><br>
-    <input type="password" placeholder="Password"><br><br>
-    <button>Login</button>
-</div>
-
-<!-- REGISTER -->
-<div id="register" class="page">
-    <h2>Register</h2>
-    <input placeholder="Name"><br><br>
-    <input placeholder="Email"><br><br>
-    <input type="password" placeholder="Password"><br><br>
-    <button>Register</button>
-</div>
-<!-- FOOTER -->
-<div class="footer">
-
-<h3>Stay Connected</h3>
-<p>
-<a href="https://www.instagram.com/nkubito_nzigiye/" target="_blank">Instagram</a> |
-<a href="https://www.instagram.com/nkubito_nzigiye/" target="_blank">Facebook</a> |
-<a href="https://wa.me/250790161576" target="_blank">WhatsApp</a>
-</p>
-
-<div class="footer-grid">
-<div>
-<h4>FAQs</h4>
-<p>Discount, Service commitment, Feedback...</p>
-
-<h4>Browse</h4>
-<p>Shoes, Dresses, Bags...</p>
-</div>
-
-<div>
-<h4>Contact</h4>
-<p>Kabuga, Kigali<br>0790161576</p>
-</div>
-</div>
-
-<p>© 2026 e-buy Rwanda</p>
-
-</div>
-
-<script>
-let products = [];
-let cart = [];
-
-/* YOUR IMAGES */
-let images = [
-  "NNN.jpg","Q.webp","B.jpg","JJ.jpg","NN.jpg",
-  "J.jpg","N.jpg","U.jpg","0.jpg","I.jpg","E.webp"
-];
-
-for(let i=0; i<images.length; i++){
-    products.push({
-        name:"Product "+(i+1),
-        price:Math.floor(Math.random()*100),
-        img:images[i]
-    });
-}
-
-function loadProducts(listData = products){
-    let list = document.getElementById("productList");
-    list.innerHTML = "";
-
-    listData.forEach((p,i)=>{
-        list.innerHTML += `
-        <div class="card">
-            <img src="${p.img}">
-            <h4>${p.name}</h4>
-            <p>$${p.price}</p>
-            <button onclick="addToCart(${i})">Add</button>
-        </div>`;
-    });
-}
-
-function addToCart(i){
-    cart.push(products[i]);
-    document.getElementById("cartCount").innerText = cart.length;
-}
-
-function showPage(page){
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.getElementById(page).classList.add("active");
-}
-
-function searchProduct(){
-    let value = document.getElementById("searchInput").value.toLowerCase();
-    let filtered = products.filter(p=>p.name.toLowerCase().includes(value));
-    loadProducts(filtered);
-}
-
-loadProducts();
-</script>
-
+  </header>
+  <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+    <a class="nav-link active" href="#discover">Discover</a>
+    <a class="nav-link" href="#categories">Categories</a>
+    <a class="nav-link" href="#popular">Popular picks</a>
+    <a class="nav-link" href="#sell">Sell on eBuy</a>
+    <span class="nav-location">Delivering across Rwanda <span aria-hidden="true">⌖</span></span>
+  </nav>
+  <main>
+    <section class="hero page-width" id="discover">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="eyebrow-line"></span> YOUR MARKETPLACE, YOUR RWANDA</span>
+        <h1>Good finds.<br><em>Great stories.</em></h1>
+        <p>Explore products from local sellers and discover something you’ll love. All in one place, right here in Rwanda.</p>
+        <div class="hero-buttons"><a class="button button-light" href="#popular">Explore products <span>→</span></a><a class="hero-text-link" href="#sell">I want to sell <span>↗</span></a></div>
+        <div class="hero-proof"><div class="proof-avatars"><span>U</span><span>A</span><span>M</span><span>+</span></div><p><strong>Local sellers, real people</strong><br><small>Discover businesses near you</small></p></div>
+      </div>
+      <div class="hero-art" aria-label="Lifestyle shopping photography">
+        <img class="hero-image" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1100&q=85" alt="Modern clothing and lifestyle shop">
+        <div class="hero-floating-card"><span class="floating-icon">✦</span><div><strong>Made to be found</strong><small>One marketplace. Many possibilities.</small></div></div>
+        <div class="hero-stamp">SHOP<br>RWANDA<br><span>♡</span></div>
+      </div>
+    </section>
+    <section class="category-section page-width" id="categories">
+      <div class="section-heading"><div><span class="eyebrow">FIND YOUR NEXT FAVOURITE</span><h2>Shop by category</h2></div><a class="subtle-link" href="#popular">View all products <span>→</span></a></div>
+      <div class="category-grid">
+        <button class="category-tile category-fashion" data-category="Fashion"><span class="category-photo"></span><span class="category-label">Fashion <b>↗</b></span></button>
+        <button class="category-tile category-electronics" data-category="Electronics"><span class="category-photo"></span><span class="category-label">Electronics <b>↗</b></span></button>
+        <button class="category-tile category-home" data-category="Home"><span class="category-photo"></span><span class="category-label">Home & living <b>↗</b></span></button>
+        <button class="category-tile category-beauty" data-category="Beauty"><span class="category-photo"></span><span class="category-label">Beauty <b>↗</b></span></button>
+        <button class="category-tile category-accessories" data-category="Accessories"><span class="category-photo"></span><span class="category-label">Accessories <b>↗</b></span></button>
+      </div>
+    </section>
+    <section class="products-section" id="popular">
+      <div class="page-width">
+        <div class="section-heading products-heading"><div><span class="eyebrow">A LITTLE SOMETHING FOR EVERYONE</span><h2>Popular right now</h2><p class="section-description">Thoughtful finds from sellers around Rwanda.</p></div><div class="product-controls"><label class="sr-only" for="sortSelect">Sort products</label><select id="sortSelect"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="name">Name: A to Z</option></select></div></div>
+        <div class="filter-row" id="filterRow" aria-label="Filter products"><button class="filter-chip selected" data-filter="All">All products</button><button class="filter-chip" data-filter="Fashion">Fashion</button><button class="filter-chip" data-filter="Electronics">Electronics</button><button class="filter-chip" data-filter="Home">Home & living</button><button class="filter-chip" data-filter="Beauty">Beauty</button><button class="filter-chip" data-filter="Accessories">Accessories</button></div>
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+        <p class="empty-state" id="emptyState" hidden>No products found. Try another search or category.</p>
+        <div class="load-more-wrap"><button class="button button-outline" id="clearFiltersButton">Clear filters</button></div>
+      </div>
+    </section>
+    <section class="seller-banner page-width" id="sell">
+      <div class="seller-banner-copy"><span class="eyebrow">GROW WITH EB­UY</span><h2>Your business deserves<br>a bigger <em>market.</em></h2><p>Meet new customers, showcase your products and grow your business with a marketplace built for Rwanda.</p><a class="button button-dark" href="mailto:hello@ebuy.rw?subject=I%20want%20to%20sell%20on%20eBuy">Become a seller <span>→</span></a></div>
+      <div class="seller-banner-art"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=85" alt="Small business owner preparing an online order"><div class="seller-note">LOCAL<br>BUSINESSES<br><span>♥</span></div></div>
+    </section>
+    <section class="trust-strip page-width"><div><span class="trust-icon">⌂</span><p><strong>Rooted in Rwanda</strong><small>Supporting local sellers</small></p></div><div><span class="trust-icon">♡</span><p><strong>More choice</strong><small>Products for every day</small></p></div><div><span class="trust-icon">✳</span><p><strong>Simple shopping</strong><small>A smoother way to discover</small></p></div></section>
+  </main>
+  <footer class="site-footer"><div class="footer-main page-width"><div class="footer-brand"><a class="brand brand-footer" href="#"><span class="brand-mark">e</span><span>buy<span class="brand-dot">.</span></span></a><p>Discover more. Shop local.<br>Made for the way Rwanda shops.</p></div><div><h3>Explore</h3><a href="#discover">Discover</a><a href="#categories">Categories</a><a href="#popular">Popular products</a></div><div><h3>For sellers</h3><a href="#sell">Start selling</a><a href="mailto:hello@ebuy.rw">Seller support</a></div><div><h3>Need help?</h3><a href="mailto:hello@ebuy.rw">Contact us</a><a href="#popular">Shopping guide</a></div></div><div class="footer-bottom page-width"><span>© <span id="currentYear"></span> eBuy Rwanda. All rights reserved.</span><span>Prices displayed in Rwandan francs (RWF)</span></div></footer>
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="drawer-header"><div><span class="eyebrow">YOUR PICKS</span><h2>Your cart <span id="drawerItemCount">(0)</span></h2></div><button class="close-button" id="closeCartButton" aria-label="Close cart">×</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-empty" id="cartEmpty"><span>♧</span><h3>Your cart is waiting</h3><p>Add something lovely from the marketplace.</p><button class="button button-dark" id="continueShoppingButton">Continue shopping</button></div>
+    <div class="cart-summary" id="cartSummary"><div class="summary-line"><span>Subtotal</span><strong id="cartSubtotal">RWF 0</strong></div><p>Delivery fees are calculated by the seller and confirmed before payment.</p><button class="button button-dark checkout-button" id="checkoutButton">Continue to checkout <span>→</span></button><small>Demo storefront — payments are not enabled yet.</small></div>
+  </aside>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="account-dialog" id="accountDialog"><button class="close-button dialog-close" id="closeAccountButton" aria-label="Close">×</button><span class="eyebrow">WELCOME TO EB­UY</span><h2>Your eBuy account</h2><p>Customer accounts and seller onboarding will be connected when the marketplace backend is ready.</p><a class="button button-dark" href="mailto:hello@ebuy.rw?subject=eBuy%20account%20enquiry">Contact the eBuy team</a></dialog>
 </body>
 </html>
