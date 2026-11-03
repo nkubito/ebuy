@@ -11,3 +11,18 @@
 .category-baby .category-photo{background-image:url("https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=500&q=80")}
 @media(max-width:900px){.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-tile:last-child{display:block}.category-photo{height:130px}}
+
+
+/* Gentle welcome hero motion: a slow cinematic image drift */
+.hero-image{
+  transform:scale(1.035);
+  animation:hero-image-drift 28s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes hero-image-drift{
+  from{transform:scale(1.035) translate3d(0,0,0)}
+  to{transform:scale(1.13) translate3d(-1.2%,.6%,0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-image{animation:none;transform:none;will-change:auto}
+}
