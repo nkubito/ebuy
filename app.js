@@ -1,8 +1,8 @@
 const products = [
   {id:"p1",name:"Everyday Classic Sneakers",category:"Fashion",seller:"Kigali Streetwear",price:38500,image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85",badge:"Popular"},
   {id:"p2",name:"Wireless Studio Headphones",category:"Electronics",seller:"Tech Corner Kigali",price:68500,image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85",badge:"Top pick"},
-  {id:"p3",name:"Minimal Ceramic Vase Set",category:"Home",seller:"Imizi Home",price:24500,image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=700&q=85",badge:"Handpicked"},
-  {id:"p4",name:"Daily Glow Skincare Kit",category:"Beauty",seller:"Glow House",price:42000,image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=700&q=85",badge:"New"},
+  {id:"p3",name:"Minimal Ceramic Vase Set",category:"Home & Living",seller:"Imizi Home",price:24500,image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=700&q=85",badge:"Handpicked"},
+  {id:"p4",name:"Daily Glow Skincare Kit",category:"Beauty & Personal Care",seller:"Glow House",price:42000,image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=700&q=85",badge:"New"},
   {id:"p5",name:"Timeless Everyday Watch",category:"Accessories",seller:"The Edit Rwanda",price:55000,image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=85",badge:"Popular"},
   {id:"p6",name:"Structured Weekend Tote",category:"Fashion",seller:"Inzuki Designs",price:32000,image:"https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=700&q=85",badge:"Local find"},
   {id:"p7",name:"Modern Table Lamp",category:"Home",seller:"Imizi Home",price:47500,image:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=85",badge:"New"},
