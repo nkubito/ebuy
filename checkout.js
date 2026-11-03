@@ -39,12 +39,85 @@ function updatePaymentView(){
   document.querySelectorAll("[data-payment-option]").forEach(label => label.classList.toggle("selected",label.querySelector("input").checked));
 }
 paymentRadios.forEach(radio => radio.addEventListener("change",updatePaymentView));
+let currentOrder = null;
 document.getElementById("checkoutForm").addEventListener("submit",event=>{
   event.preventDefault();
   if(!checkoutLines.length){showCheckoutToast("Your cart is empty. Add a product before checkout.");return;}
-  const form = event.currentTarget;
+  const form=event.currentTarget;
   if(!form.reportValidity()) return;
-  showCheckoutToast("Checkout preview saved. Secure order and payment processing will be connected in the backend.");
+  const data=Object.fromEntries(new FormData(form).entries());
+  const method=data.paymentMethod==="mobile_money" ? (data.mobileNetwork==="mtn" ? "MTN Mobile Money" : "Airtel Money") : "Visa / Mastercard";
+  currentOrder={
+    reference:"EBY-"+new Date().toISOString().replace(/[-:T.Z]/g,"").slice(0,14),
+    date:new Date(),
+    customer:{name:data.fullName,phone:data.phone,email:data.email||"Not provided",district:data.district,sector:data.sector,address:data.address},
+    paymentMethod:method,
+    items:checkoutLines.map(item=>({...item})),
+    subtotal
+  };
+  renderOrderReview();
+  document.getElementById("orderReviewPanel").hidden=false;
+  document.getElementById("orderConfirmedPanel").hidden=true;
+  document.getElementById("orderReviewPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
+function renderOrderReview(){
+  const c=currentOrder.customer;
+  document.getElementById("reviewDetails").innerHTML=`
+    <div class="review-reference"><span>ORDER REFERENCE</span><strong>${currentOrder.reference}</strong><small>${currentOrder.date.toLocaleString()}</small></div>
+    <div class="review-columns">
+      <div><span class="review-label">CUSTOMER</span><strong>${escapeHtml(c.name)}</strong><p>${escapeHtml(c.phone)}<br>${escapeHtml(c.email)}</p></div>
+      <div><span class="review-label">DELIVERY ADDRESS</span><strong>${escapeHtml(c.district)}, ${escapeHtml(c.sector)}</strong><p>${escapeHtml(c.address)}</p></div>
+    </div>
+    <div class="review-payment"><span>SELECTED PAYMENT METHOD</span><strong>${escapeHtml(currentOrder.paymentMethod)}</strong></div>
+    <div class="review-products">${currentOrder.items.map(item=>`<div><span>${escapeHtml(item.name)} × ${item.quantity}</span><strong>${formatRwf(item.price*item.quantity)}</strong></div>`).join("")}</div>
+    <div class="review-total"><span>Estimated total (delivery not included)</span><strong>${formatRwf(currentOrder.subtotal)}</strong></div>`;
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+}
+function downloadOrderPdf(){
+  if(!currentOrder){showCheckoutToast("Please review your order first.");return;}
+  if(!window.jspdf?.jsPDF){showCheckoutToast("PDF tool did not load. Please check your connection and try again.");return;}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF();
+  const c=currentOrder.customer;
+  let y=20;
+  doc.setFont("helvetica","bold");doc.setFontSize(22);doc.text("eBuy Rwanda",18,y);
+  y+=9;doc.setFontSize(15);doc.text("ORDER SUMMARY",18,y);
+  y+=9;doc.setFont("helvetica","normal");doc.setFontSize(10);
+  doc.text("Reference: "+currentOrder.reference,18,y);y+=6;
+  doc.text("Date: "+currentOrder.date.toLocaleString(),18,y);y+=10;
+  doc.setFont("helvetica","bold");doc.text("CUSTOMER & DELIVERY",18,y);y+=7;
+  doc.setFont("helvetica","normal");
+  const lines=[
+    "Name: "+c.name,"Phone: "+c.phone,"Email: "+c.email,
+    "Address: "+c.district+", "+c.sector,"Delivery instructions: "+c.address,
+    "Payment preference: "+currentOrder.paymentMethod
+  ];
+  lines.forEach(line=>{const wrapped=doc.splitTextToSize(line,174);doc.text(wrapped,18,y);y+=wrapped.length*5+1;});
+  y+=4;doc.setFont("helvetica","bold");doc.text("ITEMS",18,y);y+=7;
+  currentOrder.items.forEach(item=>{
+    const label=item.name+" x "+item.quantity;
+    const wrapped=doc.splitTextToSize(label,120);
+    doc.setFont("helvetica","normal");doc.text(wrapped,18,y);
+    doc.text(formatRwf(item.price*item.quantity),192,y,{align:"right"});
+    y+=Math.max(7,wrapped.length*5);
+    if(y>260){doc.addPage();y=20;}
+  });
+  y+=5;doc.setDrawColor(210,215,208);doc.line(18,y,192,y);y+=9;
+  doc.setFont("helvetica","bold");doc.text("Estimated total: "+formatRwf(currentOrder.subtotal),18,y);
+  y+=10;doc.setFont("helvetica","normal");doc.setFontSize(9);
+  const note="Delivery fee is not included. This document is an order summary only, not a payment receipt or proof of a submitted order. Payment is not processed.";
+  doc.text(doc.splitTextToSize(note,174),18,y);
+  doc.save(currentOrder.reference+".pdf");
+}
+document.getElementById("downloadOrderButton").addEventListener("click",downloadOrderPdf);
+document.getElementById("downloadConfirmedButton").addEventListener("click",downloadOrderPdf);
+document.getElementById("confirmOrderButton").addEventListener("click",()=>{
+  if(!currentOrder)return;
+  document.getElementById("orderConfirmedPanel").hidden=false;
+  document.getElementById("orderConfirmedPanel").scrollIntoView({behavior:"smooth",block:"center"});
+  showCheckoutToast("Review marked complete. No order has been submitted yet.");
 });
 function showCheckoutToast(message){
   const toast=document.getElementById("checkoutToast");
