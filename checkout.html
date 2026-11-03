@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <script src="checkout.js" defer></script>
 </head>
 <body class="checkout-page">
@@ -66,7 +67,21 @@
           <p class="payment-notice"><span>ⓘ</span> Payment options are shown as a checkout preview. No money will be charged until the payment gateway is connected and activated.</p>
         </section>
         <button class="button button-dark place-order-button" type="submit">Review order <span>→</span></button>
-        <p class="checkout-terms">By continuing, you confirm that your delivery information is correct.</p>
+        <p class="checkout-terms">You can review and download your order summary before confirming.</p>
+        <section class="checkout-panel order-review-panel" id="orderReviewPanel" hidden>
+          <div class="checkout-panel-heading"><span class="checkout-step">3</span><div><h2>Review before confirming</h2><p>Check these details carefully. Download a copy for your records.</p></div></div>
+          <div id="reviewDetails" class="review-details"></div>
+          <div class="review-actions">
+            <button class="button button-outline" id="downloadOrderButton" type="button">↓ Download order PDF</button>
+            <button class="button button-dark" id="confirmOrderButton" type="button">Confirm order <span>→</span></button>
+          </div>
+          <p class="review-disclaimer">Frontend preview only: confirming here does not submit an order, reserve stock or charge a payment. Backend and payment processing will be connected next.</p>
+        </section>
+        <section class="order-confirmed-panel" id="orderConfirmedPanel" hidden aria-live="polite">
+          <span class="confirmed-check">✓</span><h2>Review confirmed</h2>
+          <p>Your order summary is ready. This is a frontend demonstration, not a submitted order.</p>
+          <button class="button button-outline" id="downloadConfirmedButton" type="button">↓ Download order PDF again</button>
+        </section>
       </form>
       <aside class="order-summary-panel">
         <div class="order-summary-heading"><h2>Your order</h2><a href="index.html">Edit cart</a></div>
