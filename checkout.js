@@ -81,34 +81,58 @@ function downloadOrderPdf(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF();
   const c=currentOrder.customer;
-  let y=20;
-  doc.setFont("helvetica","bold");doc.setFontSize(22);doc.text("eBuy Rwanda",18,y);
-  y+=9;doc.setFontSize(15);doc.text("ORDER SUMMARY",18,y);
-  y+=9;doc.setFont("helvetica","normal");doc.setFontSize(10);
-  doc.text("Reference: "+currentOrder.reference,18,y);y+=6;
-  doc.text("Date: "+currentOrder.date.toLocaleString(),18,y);y+=10;
-  doc.setFont("helvetica","bold");doc.text("CUSTOMER & DELIVERY",18,y);y+=7;
-  doc.setFont("helvetica","normal");
-  const lines=[
-    "Name: "+c.name,"Phone: "+c.phone,"Email: "+c.email,
-    "Address: "+c.district+", "+c.sector,"Delivery instructions: "+c.address,
-    "Payment preference: "+currentOrder.paymentMethod
-  ];
-  lines.forEach(line=>{const wrapped=doc.splitTextToSize(line,174);doc.text(wrapped,18,y);y+=wrapped.length*5+1;});
-  y+=4;doc.setFont("helvetica","bold");doc.text("ITEMS",18,y);y+=7;
-  currentOrder.items.forEach(item=>{
-    const label=item.name+" x "+item.quantity;
-    const wrapped=doc.splitTextToSize(label,120);
-    doc.setFont("helvetica","normal");doc.text(wrapped,18,y);
-    doc.text(formatRwf(item.price*item.quantity),192,y,{align:"right"});
-    y+=Math.max(7,wrapped.length*5);
-    if(y>260){doc.addPage();y=20;}
+  const pageWidth=doc.internal.pageSize.getWidth();
+  const pageHeight=doc.internal.pageSize.getHeight();
+  const green=[23,59,45], lime=[216,238,131], orange=[229,139,85], ink=[23,37,31], muted=[113,128,120];
+  function drawPageBrand(){
+    doc.setDrawColor(...green);doc.setLineWidth(1.4);doc.rect(7,7,pageWidth-14,pageHeight-14);
+    doc.setFillColor(...green);doc.rect(7,7,pageWidth-14,3,"F");
+    doc.setFillColor(...lime);doc.roundedRect(17,17,11,11,2,2,"F");
+    doc.setFont("helvetica","bold");doc.setFontSize(15);doc.setTextColor(...green);doc.text("e",20.1,25.1);
+    doc.setFontSize(20);doc.setTextColor(...ink);doc.text("buy",32,26);
+    doc.setTextColor(...orange);doc.text(".",61,26);
+    doc.setFontSize(8);doc.setFont("helvetica","normal");doc.setTextColor(...muted);doc.text("RWANDA MARKETPLACE",pageWidth-17,24,{align:"right"});
+    doc.setDrawColor(225,231,222);doc.setLineWidth(.3);doc.line(17,34,pageWidth-17,34);
+    doc.setFontSize(8);doc.setTextColor(...muted);doc.text("eBuy Rwanda  •  Order summary",17,pageHeight-14);
+    doc.text(currentOrder.reference,pageWidth-17,pageHeight-14,{align:"right"});
+  }
+  function nextPage(){
+    doc.addPage();drawPageBrand();return 47;
+  }
+  drawPageBrand();
+  let y=47;
+  doc.setFont("helvetica","bold");doc.setFontSize(17);doc.setTextColor(...green);doc.text("ORDER SUMMARY",17,y);
+  y+=9;doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(...muted);
+  doc.text("Reference: "+currentOrder.reference,17,y);y+=5;
+  doc.text("Date: "+currentOrder.date.toLocaleString(),17,y);y+=10;
+  doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(...ink);doc.text("CUSTOMER & DELIVERY",17,y);y+=7;
+  doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(...ink);
+  const lines=["Name: "+c.name,"Phone: "+c.phone,"Email: "+c.email,"Address: "+c.district+", "+c.sector,"Delivery instructions: "+c.address,"Payment preference: "+currentOrder.paymentMethod];
+  lines.forEach(line=>{
+    const wrapped=doc.splitTextToSize(line,pageWidth-34);
+    if(y+wrapped.length*5>pageHeight-28)y=nextPage();
+    doc.text(wrapped,17,y);y+=wrapped.length*5+2;
   });
-  y+=5;doc.setDrawColor(210,215,208);doc.line(18,y,192,y);y+=9;
-  doc.setFont("helvetica","bold");doc.text("Estimated total: "+formatRwf(currentOrder.subtotal),18,y);
-  y+=10;doc.setFont("helvetica","normal");doc.setFontSize(9);
-  const note="Delivery fee is not included. This document is an order summary only, not a payment receipt or proof of a submitted order. Payment is not processed.";
-  doc.text(doc.splitTextToSize(note,174),18,y);
+  y+=5;
+  if(y>pageHeight-35)y=nextPage();
+  doc.setFont("helvetica","bold");doc.setFontSize(10);doc.text("ORDER ITEMS",17,y);y+=7;
+  currentOrder.items.forEach(item=>{
+    const label=item.name+" × "+item.quantity;
+    const wrapped=doc.splitTextToSize(label,pageWidth-95);
+    if(y+Math.max(8,wrapped.length*5)>pageHeight-27)y=nextPage();
+    doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(...ink);
+    doc.text(wrapped,17,y);
+    doc.setFont("helvetica","bold");doc.text(formatRwf(item.price*item.quantity),pageWidth-17,y,{align:"right"});
+    y+=Math.max(8,wrapped.length*5)+2;
+    doc.setDrawColor(235,238,232);doc.line(17,y-1,pageWidth-17,y-1);
+  });
+  if(y>pageHeight-48)y=nextPage();
+  y+=7;doc.setDrawColor(...green);doc.setLineWidth(.6);doc.line(17,y,pageWidth-17,y);y+=9;
+  doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(...green);
+  doc.text("ESTIMATED TOTAL",17,y);doc.text(formatRwf(currentOrder.subtotal),pageWidth-17,y,{align:"right"});
+  y+=9;doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(...muted);
+  const note="Delivery fee is not included. This document is an order summary only, not a payment receipt or proof of a submitted order. Payment has not been processed.";
+  doc.text(doc.splitTextToSize(note,pageWidth-34),17,y);
   doc.save(currentOrder.reference+".pdf");
 }
 document.getElementById("downloadOrderButton").addEventListener("click",downloadOrderPdf);
