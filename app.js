@@ -110,7 +110,7 @@ document.getElementById("cartItems").addEventListener("click",e=>{
   if(qty){const item=cart.find(x=>x.id===qty.dataset.quantity);if(item){item.quantity+=Number(qty.dataset.change);if(item.quantity<=0)cart=cart.filter(x=>x.id!==item.id);saveCart();}}
   if(remove){cart=cart.filter(x=>x.id!==remove.dataset.remove);saveCart();}
 });
-document.getElementById("checkoutButton").addEventListener("click",()=>showToast("Checkout will be available after secure payments are integrated."));
+document.getElementById("checkoutButton").addEventListener("click",()=>{window.location.href="checkout.html";});
 document.getElementById("accountButton").addEventListener("click",()=>document.getElementById("accountDialog").showModal());
 document.getElementById("closeAccountButton").addEventListener("click",()=>document.getElementById("accountDialog").close());
 document.getElementById("mobileMenuButton").addEventListener("click",e=>{const nav=document.getElementById("mainNav");const open=nav.classList.toggle("open");e.currentTarget.setAttribute("aria-expanded",String(open));});
