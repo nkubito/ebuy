@@ -1,12 +1,19 @@
 const products = [
   {id:"p1",name:"Everyday Classic Sneakers",category:"Fashion",seller:"Kigali Streetwear",price:38500,image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85",badge:"Popular"},
   {id:"p2",name:"Wireless Studio Headphones",category:"Electronics",seller:"Tech Corner Kigali",price:68500,image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=85",badge:"Top pick"},
-  {id:"p3",name:"Minimal Ceramic Vase Set",category:"Home",seller:"Imizi Home",price:24500,image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=700&q=85",badge:"Handpicked"},
-  {id:"p4",name:"Daily Glow Skincare Kit",category:"Beauty",seller:"Glow House",price:42000,image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=700&q=85",badge:"New"},
+  {id:"p3",name:"Minimal Ceramic Vase Set",category:"Home & Living",seller:"Imizi Home",price:24500,image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=700&q=85",badge:"Handpicked"},
+  {id:"p4",name:"Daily Glow Skincare Kit",category:"Beauty & Personal Care",seller:"Glow House",price:42000,image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=700&q=85",badge:"New"},
   {id:"p5",name:"Timeless Everyday Watch",category:"Accessories",seller:"The Edit Rwanda",price:55000,image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=85",badge:"Popular"},
   {id:"p6",name:"Structured Weekend Tote",category:"Fashion",seller:"Inzuki Designs",price:32000,image:"https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=700&q=85",badge:"Local find"},
   {id:"p7",name:"Modern Table Lamp",category:"Home",seller:"Imizi Home",price:47500,image:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=85",badge:"New"},
-  {id:"p8",name:"Compact Bluetooth Speaker",category:"Electronics",seller:"Tech Corner Kigali",price:59000,image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=85",badge:"Top pick"}
+  {id:"p8",name:"Compact Bluetooth Speaker",category:"Electronics",seller:"Tech Corner Kigali",price:59000,image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=85",badge:"Top pick"},
+  {id:"p9",name:"Fresh Market Fruit Basket",category:"Food & Groceries",seller:"Kigali Fresh Market",price:12500,image:"https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=700&q=85",badge:"Everyday pick"},
+  {id:"p10",name:"Pantry Essentials Bundle",category:"Food & Groceries",seller:"Umucyo Groceries",price:18500,image:"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=85",badge:"Kitchen staple"},
+  {id:"p11",name:"Home Cleaning Starter Set",category:"Home Essentials",seller:"Isuku Home Store",price:14500,image:"https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=700&q=85",badge:"Daily essential"},
+  {id:"p12",name:"Everyday Cookware Set",category:"Kitchen & Dining",seller:"Imizi Home",price:46500,image:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=700&q=85",badge:"Kitchen favourite"},
+  {id:"p13",name:"Soft Living Room Cushion Set",category:"Furniture & Decor",seller:"Imizi Home",price:28000,image:"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=85",badge:"Home comfort"},
+  {id:"p14",name:"Gentle Daily Care Set",category:"Beauty & Personal Care",seller:"Glow House",price:22000,image:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=700&q=85",badge:"Daily care"},
+  {id:"p15",name:"Baby Care Essentials Pack",category:"Baby & Kids",seller:"Little Steps Kigali",price:31500,image:"https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=700&q=85",badge:"Family essential"}
 ];
 
 const money = value => new Intl.NumberFormat("en-RW",{style:"currency",currency:"RWF",maximumFractionDigits:0}).format(value).replace("RWF","RWF");
