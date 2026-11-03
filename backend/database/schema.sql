@@ -119,4 +119,10 @@ INSERT IGNORE INTO categories (name, slug) VALUES
   ('Electronics', 'electronics'),
   ('Home & Living', 'home'),
   ('Beauty', 'beauty'),
-  ('Accessories', 'accessories');
+  ('Accessories', 'accessories'),
+  ('Food & Groceries', 'food-groceries'),
+  ('Home Essentials', 'home-essentials'),
+  ('Kitchen & Dining', 'kitchen-dining'),
+  ('Furniture & Decor', 'furniture-decor'),
+  ('Beauty & Personal Care', 'beauty-personal-care'),
+  ('Baby & Kids', 'baby-kids');
